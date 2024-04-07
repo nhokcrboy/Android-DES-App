@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#4D000000"/> <!-- Màu nền với alpha là 30% của màu đen (#4D là 77 trong hệ hex, tương đương với 30% alpha) -->
+    <corners android:radius="16dp"/> <!-- Bạn có thể điều chỉnh radius để thay đổi độ bo của góc -->
+</shape>

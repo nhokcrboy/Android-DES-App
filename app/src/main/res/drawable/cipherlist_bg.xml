@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Top border -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FF0000"/> <!-- Red stroke color -->
+        </shape>
+    </item>
+    <!-- Right border -->
+    <item android:left="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#FF0000"/>
+        </shape>
+    </item>
+    <!-- Left border -->
+    <item android:right="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#FF0000"/>
+        </shape>
+    </item>
+    <!-- Background for the rest of the view -->
+    <item android:top="2dp" android:right="2dp" android:left="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#00FFFFFF"/> <!-- White background color -->
+        </shape>
+    </item>
+</layer-list>
