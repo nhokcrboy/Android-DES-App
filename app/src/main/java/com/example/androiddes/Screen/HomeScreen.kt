@@ -46,6 +46,8 @@ class HomeScreen : Fragment() {
             showDialog()
         }
 
+        cipherTextList.clear()
+
         getCipherText()
         adapter = CipherTextAdapter(cipherTextList, object : CipherTextAdapter.OnItemClickListener {
             override fun onItemClick(bundle: Bundle) {
