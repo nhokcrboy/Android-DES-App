@@ -3,6 +3,7 @@ package com.example.androiddes.Screen
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +11,15 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.chaquo.python.Python
+import com.example.androiddes.Adapter.CipherTextAdapter
+import com.example.androiddes.Model.CipherText
 import com.example.androiddes.R
 import com.example.androiddes.databinding.FragmentHomeScreenBinding
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Objects
 
 
 class HomeScreen : Fragment() {
@@ -25,6 +27,8 @@ class HomeScreen : Fragment() {
     private val binding get() = _binding!!
     private val db = FirebaseFirestore.getInstance()
     private val python = Python.getInstance()
+    private val cipherTextList: ArrayList<CipherText> = ArrayList()
+    private lateinit var adapter: CipherTextAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +44,32 @@ class HomeScreen : Fragment() {
 
         binding.floatButton.setOnClickListener {
             showDialog()
+        }
+
+        getCipherText()
+        adapter = CipherTextAdapter(cipherTextList, object : CipherTextAdapter.OnItemClickListener {
+            override fun onItemClick(bundle: Bundle) {
+                Log.d("HomeScreen", bundle.toString())
+                findNavController(requireParentFragment()).navigate(R.id.action_homeScreen_to_detailScreen, bundle)
+            }
+        })
+        binding.CipherList.adapter = adapter
+        binding.CipherList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+    }
+
+    private fun getCipherText() {
+        db.collection("CipherText").get().addOnSuccessListener { result ->
+            for (document in result) {
+                val cipherText = CipherText(
+                    document.data["title"].toString(),
+                    document.data["cipherText"].toString(),
+                    document.data["create_date"].toString()
+                )
+                Log.d("CipherText", "${document.id} => ${document.data}")
+                cipherTextList.add(cipherText)
+            }
+            adapter.cipherTextList = cipherTextList
+            adapter.notifyDataSetChanged()
         }
     }
 

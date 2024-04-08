@@ -1,7 +1,9 @@
 package com.example.androiddes.Model
 
-class CipherText {
-    var cipherText: String = ""
-    var title: String = ""
-    var create_date: String = ""
+import java.io.Serializable
+
+class CipherText(title: String, cipherText: String, createDate: String) : Serializable {
+    val cipherText: String = cipherText
+    val title: String = title
+    val createDate: String = createDate
 }
